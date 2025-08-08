@@ -9,15 +9,21 @@
   color: white;
   font-size: 12px;
   font-weight: 500;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, height 0.2s ease, width 0.2s ease, z-index 0.2s ease;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   box-sizing: border-box;
+  min-width: 150px;
+  z-index: 1;
 }
 
 .timelineItem:hover {
   transform: scale(1.02);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  height: auto;
+  min-height: 60px;
+  z-index: 10;
+  padding: 8px 12px;
 }
 
 .itemName {
@@ -25,11 +31,23 @@
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 600;
+  transition: white-space 0.2s ease;
+}
+
+.timelineItem:hover .itemName {
+  white-space: normal;
+  word-wrap: break-word;
+  overflow: visible;
+  text-overflow: unset;
 }
 
 .itemDate {
   font-size: 10px;
   opacity: 0.9;
   white-space: nowrap;
+}
+
+.timelineItem:hover .itemDate {
+  margin-top: 4px;
 }
 

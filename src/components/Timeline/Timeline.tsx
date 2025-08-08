@@ -3,6 +3,7 @@ import "simplebar-react/dist/simplebar.min.css";
 import { useEffect, useRef, useState } from "react";
 import type { TimelineItem } from "./TimelineItem";
 import TimelineItemComponent from "./TimelineItem";
+import NavigationControl from "./NavigationControl";
 import { assignLanes } from "../../utils/assignLanes";
 
 type TimelineProps = {
@@ -10,7 +11,6 @@ type TimelineProps = {
     subtitle: string;
     items: TimelineItem[];
 }
-
 
 export default function Timeline({ title, subtitle, items }: TimelineProps) {
     const lanes = assignLanes(items);
@@ -104,118 +104,12 @@ export default function Timeline({ title, subtitle, items }: TimelineProps) {
                 </SimpleBar>
             </div>
 
-            <div style={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                gap: '12px'
-            }}>
-                <button
-                    onClick={goToStart}
-                    style={{
-                        background: '#8B5CF6',
-                        border: 'none',
-                        borderRadius: '20px',
-                        padding: '8px 16px',
-                        color: 'white',
-                        fontSize: '14px',
-                        fontWeight: '500',
-                        cursor: 'pointer',
-                        transition: 'all 0.2s ease'
-                    }}
-                    onMouseEnter={(e) => {
-                        e.currentTarget.style.background = '#7C3AED';
-                        e.currentTarget.style.transform = 'translateY(-1px)';
-                    }}
-                    onMouseLeave={(e) => {
-                        e.currentTarget.style.background = '#8B5CF6';
-                        e.currentTarget.style.transform = 'translateY(0)';
-                    }}
-                >
-                    Start
-                </button>
-                
-                <button
-                    onClick={goBack}
-                    style={{
-                        background: 'transparent',
-                        border: '2px solid #4A5568',
-                        borderRadius: '20px',
-                        padding: '8px 16px',
-                        color: 'white',
-                        fontSize: '14px',
-                        fontWeight: '500',
-                        cursor: 'pointer',
-                        transition: 'all 0.2s ease',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '4px'
-                    }}
-                    onMouseEnter={(e) => {
-                        e.currentTarget.style.borderColor = '#6B7280';
-                        e.currentTarget.style.transform = 'translateY(-1px)';
-                    }}
-                    onMouseLeave={(e) => {
-                        e.currentTarget.style.borderColor = '#4A5568';
-                        e.currentTarget.style.transform = 'translateY(0)';
-                    }}
-                >
-                    ← Back
-                </button>
-
-                <button
-                    onClick={goForward}
-                    style={{
-                        background: 'transparent',
-                        border: '2px solid #4A5568',
-                        borderRadius: '20px',
-                        padding: '8px 16px',
-                        color: 'white',
-                        fontSize: '14px',
-                        fontWeight: '500',
-                        cursor: 'pointer',
-                        transition: 'all 0.2s ease',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '4px'
-                    }}
-                    onMouseEnter={(e) => {
-                        e.currentTarget.style.borderColor = '#6B7280';
-                        e.currentTarget.style.transform = 'translateY(-1px)';
-                    }}
-                    onMouseLeave={(e) => {
-                        e.currentTarget.style.borderColor = '#4A5568';
-                        e.currentTarget.style.transform = 'translateY(0)';
-                    }}
-                >
-                    Forward →
-                </button>
-
-                <button
-                    onClick={goToEnd}
-                    style={{
-                        background: '#8B5CF6',
-                        border: 'none',
-                        borderRadius: '20px',
-                        padding: '8px 16px',
-                        color: 'white',
-                        fontSize: '14px',
-                        fontWeight: '500',
-                        cursor: 'pointer',
-                        transition: 'all 0.2s ease'
-                    }}
-                    onMouseEnter={(e) => {
-                        e.currentTarget.style.background = '#7C3AED';
-                        e.currentTarget.style.transform = 'translateY(-1px)';
-                    }}
-                    onMouseLeave={(e) => {
-                        e.currentTarget.style.background = '#8B5CF6';
-                        e.currentTarget.style.transform = 'translateY(0)';
-                    }}
-                >
-                    End
-                </button>
-            </div>
+            <NavigationControl
+                onGoToStart={goToStart}
+                onGoBack={goBack}
+                onGoForward={goForward}
+                onGoToEnd={goToEnd}
+            />
         </div>
     );
 }

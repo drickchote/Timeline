@@ -1,0 +1,41 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+}
+
+.button {
+  border: none;
+  border-radius: 20px;
+  padding: 8px 16px;
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.button:hover {
+  transform: translateY(-1px);
+}
+
+.primaryButton {
+  background: #8B5CF6;
+}
+
+.primaryButton:hover {
+  background: #7C3AED;
+}
+
+.secondaryButton {
+  background: transparent;
+  border: 2px solid #4A5568;
+}
+
+.secondaryButton:hover {
+  border-color: #6B7280;
+}

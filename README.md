@@ -1,69 +1,44 @@
-# React + TypeScript + Vite
+# Project overview
+A lightweight React + TypeScript timeline that packs items into horizontal lanes as compactly as possible (like a Gantt view, but minimal). Items are positioned by date range; lanes are assigned greedily so non-overlapping items share the same lane. Horizontal scrolling is handled with simplebar-react.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Run Instructions (Vite + React)
 
-Currently, two official plugins are available:
+## Requirements
+- Node.js 18 or newer  
+- npm 9 or newer (or yarn/pnpm)  
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Running the project
+``` 
+npm install
+npm run dev
+``` 
 
-## Expanding the ESLint configuration
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+# Challenge Questions:
+What you like about your implementation.
+- It's userfriendly solution
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+What you would change if you were going to do it again.
+- Virtualize for handling large amount of items
+- Split the components in more pieces, I spent too much time trying to solve overlaping issues
+- Add useMemo
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+How you made your design decisions. For example, if you looked at other timelines for inspiration, please note that.
+- I searched for "Gantt view" and got some inspirations from there
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+How you would test this if you had more time.
+- If I had more time, I would implement a combination of unit, integration, and visual regression tests to ensure both functionality and UI consistency.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+The the assignLanes function i would test that:
+- Items that do not overlap are placed in the same lane.
+- Overlapping items are placed in different lanes.
+- Edge cases like single-day events, equal start and end dates, or items starting exactly when another ends.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+For date calculations:
+- Correct percentage position (left) and width based on the timeline’s start and end
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Render the Timeline with a fixed dataset and assert that:
+- The correct number of lanes and items are rendered.
+- Navigation buttons correctly adjust the scroll position.
+- Test empty states (no items) and very dense datasets
+ 

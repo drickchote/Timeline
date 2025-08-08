@@ -4,17 +4,11 @@ import './App.css'
 
 function App() {
   return (
-    <div style={{ 
-      padding: '20px',
-      minHeight: '100vh',
-      background: '#1a1a1a'
-    }}>
       <Timeline 
         title="Project Timeline" 
-        subtitle="Horizontal scroll to explore events"
+        subtitle="Visualize your project timeline"
         items={timelineItems} 
       />
-    </div>
   )
 }
 

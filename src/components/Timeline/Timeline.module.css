@@ -1,0 +1,40 @@
+.timeline {
+  background: linear-gradient(135deg, #4A5568 0%, #2D3748 100%);
+  border-radius: 12px;
+  padding: 24px;
+  color: white;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+.header {
+  margin-bottom: 16px;
+}
+
+.title {
+  margin: 0 0 4px 0;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.subtitle {
+  margin: 0;
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+.timelineContainer {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.scrollbar {
+  width: 800px;
+}
+
+.content {
+  position: relative;
+  padding: 10px 0;
+}

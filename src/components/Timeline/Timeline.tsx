@@ -5,12 +5,16 @@ import type { TimelineItem } from "./TimelineItem";
 import TimelineItemComponent from "./TimelineItem";
 import NavigationControl from "./NavigationControl";
 import { assignLanes } from "../../utils/assignLanes";
+import styles from "./Timeline.module.css";
 
 type TimelineProps = {
     title: string;
     subtitle: string;
     items: TimelineItem[];
 }
+
+const MILLISECONDS_PER_DAY = 24 * 60 * 60 * 1000;
+const PX_PER_DAY = 20;
 
 export default function Timeline({ title, subtitle, items }: TimelineProps) {
     const lanes = assignLanes(items);
@@ -34,61 +38,45 @@ export default function Timeline({ title, subtitle, items }: TimelineProps) {
         el.scrollTo({ left: (currentView / 100) * max, behavior: 'smooth' });
       }, [currentView]);
 
-    const DAY = 24 * 60 * 60 * 1000;
-    const PX_PER_DAY = 20;
+ 
 
     const contentWidth = Math.max(
         800,
-        Math.ceil(totalDuration / DAY) * PX_PER_DAY 
+        Math.ceil(totalDuration / MILLISECONDS_PER_DAY) * PX_PER_DAY 
     );
 
     return (
-        <div style={{ 
-            background: 'linear-gradient(135deg, #4A5568 0%, #2D3748 100%)',
-            borderRadius: '12px',
-            padding: '24px',
-            color: 'white',
-            fontFamily: 'system-ui, -apple-system, sans-serif'
-        }}>
-            <div style={{ marginBottom: '16px' }}>
-                <h2 style={{ 
-                    margin: '0 0 4px 0',
-                    fontSize: '24px',
-                    fontWeight: '600'
-                }}>
+        <div className={styles.timeline}>
+            <div className={styles.header}>
+                <h2 className={styles.title}>
                     {title}
                 </h2>
-                <p style={{ 
-                    margin: 0,
-                    fontSize: '14px',
-                    opacity: 0.8
-                }}>
+                <p className={styles.subtitle}>
                     {subtitle}
                 </p>
             </div>
 
-            <div style={{ 
-                background: 'rgba(0, 0, 0, 0.2)',
-                borderRadius: '8px',
-                padding: '20px',
-                marginBottom: '20px',
-                minHeight: `${lanes.length * 60 + 40}px`,
-                position: 'relative'
-            }}>
+            <div 
+                className={styles.timelineContainer}
+                style={{ 
+                    minHeight: `${lanes.length * 60 + 40}px`
+                }}
+            >
                 <SimpleBar 
                     ref={barRef}
+                    className={styles.scrollbar}
                     style={{ 
-                        height: `${lanes.length * 60 + 40}px`,
-                        width: '800px'
+                        height: `${lanes.length * 60 + 40}px`
                     }}
                     autoHide={false}
                 >
-                    <div style={{ 
-                        position: 'relative',
-                        width: `${contentWidth}px`, 
-                        height: `${lanes.length * 60}px`,
-                        padding: '10px 0'
-                    }}>
+                    <div 
+                        className={styles.content}
+                        style={{ 
+                            width: `${contentWidth}px`, 
+                            height: `${lanes.length * 60}px`
+                        }}
+                    >
                         {lanes.map((lane, laneIndex) =>
                             lane.map(item => (
                                 <TimelineItemComponent

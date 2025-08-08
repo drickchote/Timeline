@@ -15,16 +15,12 @@ type TimelineProps = {
 
 const MILLISECONDS_PER_DAY = 24 * 60 * 60 * 1000;
 const PX_PER_DAY = 20;
-const MIN_VIEW_POSITION = 0;
-const MAX_VIEW_POSITION = 100;
-const NAVIGATION_STEP_SIZE = 25;
 const MIN_CONTENT_WIDTH = 800;
 const LANE_HEIGHT = 60;
 const TIMELINE_PADDING = 40;
 
 export default function Timeline({ title, subtitle, items }: TimelineProps) {
     const lanes = assignLanes(items);
-    const [currentView, setCurrentView] = useState(MIN_VIEW_POSITION);
     const barRef = useRef<any>(null);
 
     const allDates = items.flatMap(item => [new Date(item.start), new Date(item.end)]);
@@ -32,19 +28,32 @@ export default function Timeline({ title, subtitle, items }: TimelineProps) {
     const endDate = new Date(Math.max(...allDates.map(d => d.getTime())));
     const totalDuration = endDate.getTime() - startDate.getTime();
     
-    const goToStart = () => setCurrentView(MIN_VIEW_POSITION);
-    const goToEnd = () => setCurrentView(MAX_VIEW_POSITION);
-    const goBack = () => setCurrentView(Math.max(MIN_VIEW_POSITION, currentView - NAVIGATION_STEP_SIZE));
-    const goForward = () => setCurrentView(Math.min(MAX_VIEW_POSITION, currentView + NAVIGATION_STEP_SIZE));
-
-    useEffect(() => {
+    const goToStart = () => {
+        const el: HTMLElement | null = barRef.current?.getScrollElement?.();
+        if (!el) return;
+        el.scrollTo({ left: 0, behavior: 'smooth' });
+    };
+    
+    const goToEnd = () => {
         const el: HTMLElement | null = barRef.current?.getScrollElement?.();
         if (!el) return;
         const max = el.scrollWidth - el.clientWidth;
-        el.scrollTo({ left: (currentView / MAX_VIEW_POSITION) * max, behavior: 'smooth' });
-      }, [currentView]);
-
- 
+        el.scrollTo({ left: max, behavior: 'smooth' });
+    };
+    
+    const goBack = () => {
+        const el: HTMLElement | null = barRef.current?.getScrollElement?.();
+        if (!el) return;
+        const stepSize = el.clientWidth * 0.25;
+        el.scrollTo({ left: el.scrollLeft - stepSize, behavior: 'smooth' });
+    };
+    
+    const goForward = () => {
+        const el: HTMLElement | null = barRef.current?.getScrollElement?.();
+        if (!el) return;
+        const stepSize = el.clientWidth * 0.25; 
+        el.scrollTo({ left: el.scrollLeft + stepSize, behavior: 'smooth' });
+    };
 
     const contentWidth = Math.max(
         MIN_CONTENT_WIDTH,
